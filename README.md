@@ -74,7 +74,7 @@ This project provides a user-friendly web application that allows you to query P
 ## Troubleshooting
 
 * If you encounter errors, check the terminal or command prompt for error messages.
-* Double-check that you've correctly replaced the placeholder API keys with your actual keys.
+* Double-check that you've correctly replaced the placeholder API keys in `app.py` with your actual OpenAI and Jina AI API keys.
 * Ensure that all required packages are installed correctly.
 
 ## Future Enhancements
@@ -87,7 +87,3 @@ This project provides a user-friendly web application that allows you to query P
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

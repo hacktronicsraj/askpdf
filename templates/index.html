@@ -1,108 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PDF Query System</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 p-8">
-    <div
-      class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl"
-    >
-      <div class="md:flex">
-        <div class="p-8">
-          <div
-            class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"
-          >
-            PDF Query System
-          </div>
-          <form id="upload-form" class="mt-4">
-            <div class="mb-4">
-              <label
-                for="file"
-                class="block text-gray-700 text-sm font-bold mb-2"
-                >Upload PDF:</label
-              >
-              <input
-                type="file"
-                id="file"
-                name="file"
-                accept=".pdf"
-                required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="query"
-                class="block text-gray-700 text-sm font-bold mb-2"
-                >Query:</label
-              >
-              <input
-                type="text"
-                id="query"
-                name="query"
-                required
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              />
-            </div>
-            <div class="flex items-center justify-between">
-              <button
-                type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-          <div id="loading" class="mt-4 hidden">
-            <p class="text-gray-700">
-              Processing... This may take a few moments.
-            </p>
-          </div>
-          <div id="result" class="mt-4 text-gray-700"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Query System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-8">
+  <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="md:flex">
+      <div class="p-8 w-full">
+        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+          PDF Query System
         </div>
+        <form id="upload-form" class="mt-4">
+          <div class="mb-4">
+            <label for="file" class="block text-gray-700 text-sm font-bold mb-2">
+              Upload PDF:
+            </label>
+            <input type="file" id="file" name="file" accept=".pdf" required
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div class="mb-4">
+            <label for="query" class="block text-gray-700 text-sm font-bold mb-2">
+              Query:
+            </label>
+            <input type="text" id="query" name="query" required
+              class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div class="flex items-center justify-between">
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Submit
+            </button>
+          </div>
+        </form>
+        <div id="loading" class="mt-4 hidden">
+          <p class="text-gray-700">
+            Processing... This may take a few moments.
+          </p>
+        </div>
+        <div id="result" class="mt-4 text-gray-700"></div>
       </div>
     </div>
+  </div>
 
-    <script>
-      document
-        .getElementById("upload-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          var formData = new FormData(this);
+  <script>
+    document
+      .getElementById("upload-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
 
-          document.getElementById("loading").classList.remove("hidden");
-          document.getElementById("result").innerHTML = "";
+        document.getElementById("loading").classList.remove("hidden");
+        document.getElementById("result").innerHTML = "";
 
-          fetch("/", {
-            method: "POST",
-            body: formData,
+        fetch("/", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              document.getElementById("loading").classList.add("hidden");
-              if (data.error) {
-                document.getElementById("result").innerHTML =
-                  "Error: " + data.error;
-              } else {
-                document.getElementById("result").innerHTML =
-                  "Answer: " + data.answer;
-              }
-            })
-            .catch((error) => {
-              document.getElementById("loading").classList.add("hidden");
-              console.error("Error:", error);
+          .then((data) => {
+            document.getElementById("loading").classList.add("hidden");
+            if (data.error) {
               document.getElementById("result").innerHTML =
-                "An error occurred. Please try again.";
-            });
-        });
-    </script>
-  </body>
+                "Error: " + data.error;
+            } else {
+              document.getElementById("result").innerHTML =
+                "Answer: " + data.answer;
+            }
+          })
+          .catch((error) => {
+            document.getElementById("loading").classList.add("hidden");
+            console.error("Error:", error);
+            document.getElementById("result").innerHTML =
+              "An error occurred. Please try again.";
+          });
+      });
+  </script>
+</body>
+
 </html>

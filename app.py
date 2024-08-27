@@ -12,9 +12,9 @@ import json
 
 app = Flask(__name__)
 
-os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY"  # Replace with your actual key
+os.environ["OPENAI_API_KEY"] = "sk-rok"  # Replace with your actual key
 JINA_RERANKER_URL = "https://api.jina.ai/v1/rerank"
-JINA_API_KEY = "YOUR_JINA_API_KEY"  # Replace with your actual Jina API key
+JINA_API_KEY = "jina_ee32c8d9f5cb4a8ea2e3919666331fb2jijtSGniMqZ8maS9_l7Ho0EiTyksL"  # Replace with your actual Jina API key
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -52,6 +52,7 @@ def index():
 
             text_list = [doc.page_content for doc in docs]
             reranked_results = jina_rerank(query, text_list)
+            print(reranked_results)
 
             most_relevant_doc = docs[reranked_results["results"][0]["index"]]
 
@@ -70,7 +71,7 @@ def index():
 def jina_rerank(query: str, text_list: list):
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {JINA_API_KEY}",
+        "Authorization": "Bearer jina_ee32c8d9f5cb4a8ea2e3919666331fb2jijtSGiMqZ8maS9_l7Ho0EiTyksL",
     }
 
     json_data = {
@@ -87,4 +88,4 @@ def jina_rerank(query: str, text_list: list):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0',port=5000)

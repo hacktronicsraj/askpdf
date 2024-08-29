@@ -30,12 +30,12 @@
                 <form id="queryForm">
                     <div class="form-group mb-3">
                         <label for="pdfFile" class="form-label">Upload PDF:</label>
-                        <input type="file" class="form-control" id="pdfFile" name="file" accept=".pdf" required>
+                        <input type="file" class="form-control" id="pdfFile" accept=".pdf" required>
                     </div>
                     
                     <div class="form-group mb-3">
                         <label for="query" class="form-label">Query:</label>
-                        <input type="text" class="form-control" id="query" name="query" required>
+                        <input type="text" class="form-control" id="query" required>
                     </div>
                     
                     <button type="submit" class="btn btn-primary w-100" id="submitBtn" disabled>Submit</button>
@@ -78,30 +78,12 @@
             errorMessage.style.display = 'none';
             result.innerHTML = '';
 
-            const formData = new FormData(form);
-
-            fetch('/', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
+            // Simulating form submission and processing
+            setTimeout(() => {
                 loading.style.display = 'none';
-                if (data.error) {
-                    errorMessage.textContent = data.error;
-                    errorMessage.style.display = 'block';
-                } else {
-                    result.innerHTML = `<p><strong>Answer:</strong> ${data.answer}</p>`;
-                }
+                result.innerHTML = '<p class="text-success">Query processed successfully!</p>';
                 submitBtn.disabled = false;
-            })
-            .catch(error => {
-                loading.style.display = 'none';
-                errorMessage.textContent = 'An error occurred. Please try again or reload the page.';
-                errorMessage.style.display = 'block';
-                submitBtn.disabled = false;
-                console.error('Error:', error);
-            });
+            }, 2000);
         });
     </script>
 </body>

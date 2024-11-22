@@ -10,6 +10,8 @@ This project provides a user-friendly web application that allows you to query P
 - **Visually Appealing UI:** Modern and user-friendly design for a better experience.
 - **Easy to Use:** Simple and straightforward workflow for quick results.
 
+Made with Guidance of Ved Prakash Chowbey
+
 ## How It Works
 
 1. **Upload:** Upload your PDF document.
